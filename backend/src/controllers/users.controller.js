@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const userModel = require('../models/user.model.js');
 
 const getAllUsers = async (req, res) => {
@@ -20,8 +19,6 @@ const getAllUsers = async (req, res) => {
       res.status(200).send(response);
    } catch (error) {
       res.status(500).send({ error });
-   } finally {
-      mongoose.connection.close();
    }
 };
 
@@ -37,8 +34,6 @@ const getUserById = async (req, res) => {
    } catch (error) {
       if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
       res.status(500).send({ error });
-   } finally {
-      mongoose.connection.close();
    }
 };
 
@@ -62,8 +57,6 @@ const createUser = async (req, res) => {
             },
          });
       res.status(500).send({ error });
-   } finally {
-      mongoose.connection.close();
    }
 };
 
@@ -76,8 +69,6 @@ const updateUser = async (req, res) => {
          return res.status(409).send({ error: `El usuario ${error.keyValue.username} ya existe` });
       if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
       res.status(500).send({ error });
-   } finally {
-      mongoose.connection.close();
    }
 };
 
@@ -88,8 +79,6 @@ const deleteUser = async (req, res) => {
    } catch (error) {
       if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
       res.status(500).send({ error });
-   } finally {
-      mongoose.connection.close();
    }
 };
 
