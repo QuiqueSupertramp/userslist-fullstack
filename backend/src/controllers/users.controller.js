@@ -18,7 +18,7 @@ const getAllUsers = async (req, res) => {
       };
       res.status(200).send(response);
    } catch (error) {
-      res.status(500).send({ error });
+      handleErrors(res, error);
    }
 };
 
@@ -32,8 +32,7 @@ const getUserById = async (req, res) => {
          active: user.active,
       });
    } catch (error) {
-      if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
-      res.status(500).send({ error });
+      handleErrors(res, error);
    }
 };
 
@@ -46,17 +45,7 @@ const createUser = async (req, res) => {
          url: `http://localhost:${process.env.PORT}/users/${newUser._id}`,
       });
    } catch (error) {
-      console.log('error', error);
-      if (error.code === 11000)
-         return res.status(409).send({ error: `El usuario ${error.keyValue.username} ya existe` });
-      if (error.name === 'ValidationError')
-         return res.status(404).send({
-            error: {
-               name: error.name,
-               message: error.message,
-            },
-         });
-      res.status(500).send({ error });
+      handleErrors(res, error);
    }
 };
 
@@ -65,21 +54,32 @@ const updateUser = async (req, res) => {
       const userUpdated = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
       res.status(200).send({ userUpdated });
    } catch (error) {
-      if (error.code === 11000)
-         return res.status(409).send({ error: `El usuario ${error.keyValue.username} ya existe` });
-      if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
-      res.status(500).send({ error });
+      handleErrors(res, error);
    }
 };
 
 const deleteUser = async (req, res) => {
    try {
       const userDeleted = await userModel.findByIdAndDelete(req.params.id);
+      if (userDeleted === null) throw new Error('User not exists');
       res.status(200).send({ userDeleted });
    } catch (error) {
-      if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
-      res.status(500).send({ error });
+      handleErrors(res, error);
    }
+};
+
+const handleErrors = (res, error) => {
+   if (error.name === 'ValidationError')
+      return res.status(404).send({
+         error: { name: error.name, message: error.message },
+      });
+   if (error.name === 'CastError') return res.status(404).send({ error: 'User not exists' });
+   if (error.code === 11000)
+      return res.status(409).send({
+         error: { name: error.name, message: `El usuario ${error.keyValue.username} ya existe` },
+      });
+
+   res.status(500).send({ error: { name: error.name, message: error.message } });
 };
 
 module.exports = { getAllUsers, createUser, deleteUser, getUserById, updateUser };
