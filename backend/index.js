@@ -14,7 +14,8 @@ app.use('/users', usersRouter);
 
 const bootstrap = async () => {
    try {
-      mongoose.connect(process.env.MONGODB_URL);
+      const res = await mongoose.connect(process.env.MONGODB_URL);
+      if (res.connections[0].readyState !== 1) throw new Error('MongoDB is not connected');
       console.log('conectado a MONGO DB');
       app.listen(process.env.PORT, () =>
          console.log(`Servidor en http://localhost:${process.env.PORT}`)
