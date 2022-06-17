@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use('/users', usersRouter);
 
-const bootstrap = () => {
+const bootstrap = async () => {
    try {
       mongoose.connect(process.env.MONGODB_URL);
       console.log('conectado a MONGO DB');
@@ -22,7 +22,8 @@ const bootstrap = () => {
    } catch (error) {
       mongoose.connection.close();
       if (error.code === 8000) return console.log('error url', error.name);
-      console.log('error', error.name)
+      console.log('error', error.name);
+      return error;
    }
 };
 
