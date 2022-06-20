@@ -1,3 +1,4 @@
+import CheckCircle from '../Icons/CheckCircle';
 import style from './InputSearchAsync.module.css';
 
 const InputSearchAsync = ({ placeholder, error, ...props }) => {
@@ -10,7 +11,7 @@ const InputSearchAsync = ({ placeholder, error, ...props }) => {
 					type='text'
 					placeholder={placeholder}
 				/>
-				<span>X</span>
+				<CheckCircle className={style.checkIcon} />
 			</div>
 			{error && <span className={style.error}>* Error</span>}
 		</div>
