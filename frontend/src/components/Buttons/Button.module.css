@@ -1,0 +1,16 @@
+.button {
+	border: none;
+	padding: 0.5rem 1rem;
+	color: var(--color-text);
+	/* border-radius: var(--rounded-sm); */
+}
+
+.create {
+	background-color: var(--color-orange);
+}
+.edit {
+	background-color: var(--color-greenlight);
+}
+.delete {
+	background-color: var(--color-red);
+}

@@ -1,0 +1,14 @@
+.inputSearch {
+}
+
+.input {
+	border: none;
+	outline: none;
+	width: 100%;
+	padding: 0.5rem 1rem;
+}
+
+.error {
+	color: var(--color-red);
+	font-size: var(--text-sm);
+}

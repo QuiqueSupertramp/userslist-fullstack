@@ -1,0 +1,20 @@
+.inputSearch {
+}
+
+.inputContainer {
+	display: flex;
+	align-items: center;
+	background-color: #fff;
+}
+
+.input {
+	border: none;
+	outline: none;
+	width: 100%;
+	padding: 0.5rem 1rem;
+}
+
+.error {
+	color: var(--color-red);
+	font-size: var(--text-sm);
+}

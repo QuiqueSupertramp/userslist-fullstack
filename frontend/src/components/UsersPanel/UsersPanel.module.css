@@ -1,0 +1,8 @@
+.usersPanel {
+	width: 500px;
+	height: 400px;
+	background-color: var(--primary);
+	border-radius: var(--rounded-sm);
+	margin: 2rem auto;
+	padding: 2rem;
+}

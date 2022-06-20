@@ -1,0 +1,57 @@
+.card {
+	padding: 0 2rem;
+	width: 100%;
+	background-color: var(--primary);
+	border-radius: var(--rounded-sm);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	border-bottom: var(--border-bottom);
+	/* color: white; */
+}
+
+.displayName {
+	width: 100%;
+}
+
+.username {
+	color: var(--color-textlight);
+	font-size: var(--text-sm);
+}
+
+.info {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 3rem;
+	width: 100%;
+}
+
+.activeContainer {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+}
+
+.active {
+	height: 0.3rem;
+	width: 0.7rem;
+	border-radius: 30px;
+	margin-top: 0.2rem;
+	background-color: var(--color-green);
+}
+
+.notActive {
+	height: 0.3rem;
+	width: 0.7rem;
+	border-radius: 30px;
+	margin-top: 0.2rem;
+	background-color: var(--color-red);
+}
+
+.buttons {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
