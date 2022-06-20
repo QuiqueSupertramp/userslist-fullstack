@@ -4,6 +4,7 @@
 	--rounded-sm: 4px;
 	--rounded-md: 8px;
 
+	--color-black: #1c1c1c;
 	--color-red: #ff464f;
 	--color-green: #ffc542;
 	--color-greenlight: #3ed598;
@@ -32,7 +33,7 @@
 
 	--primary: #30444e;
 
-	--border-bottom: 0px solid transparent;
+	--border-bottom: 2px solid transparent;
 
 	--input-border: 1px solid transparent;
 }
