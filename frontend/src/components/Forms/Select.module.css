@@ -1,0 +1,27 @@
+.selectContainer {
+	position: relative;
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	border-radius: var(--rounded-sm);
+}
+
+.select {
+	appearance: none;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	width: 100%;
+	padding: 0.5rem 3rem 0.5rem 1rem;
+	height: 2.5rem;
+	border-radius: var(--rounded-sm);
+}
+
+.arrow {
+	pointer-events: none;
+	position: absolute;
+	width: 1.5rem;
+	height: 1.5rem;
+	right: 1rem;
+	color: black;
+}
