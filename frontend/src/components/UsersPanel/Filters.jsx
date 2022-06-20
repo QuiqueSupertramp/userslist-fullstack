@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from '../Buttons/Button';
 import InputSearch from '../Forms/InputSearch';
+import Select from '../Forms/Select';
 import style from './Filters.module.css';
 
 const Filters = () => {
@@ -23,12 +24,11 @@ const Filters = () => {
 				value={name.value}
 				onChange={e => setInputName(e.target.value)}
 			/>
-			<div>
-				<select name='' id=''>
-					<option value='Por rol'>Por rol</option>
-					<option value='Por acgtivos'>Por acgtivos</option>
-				</select>
-			</div>
+			<Select>
+				<option value='ABC'>ABC</option>
+				<option value='cde'>sdf</option>
+				<option value='fgh'>fsdfsdf</option>
+			</Select>
 			<div>
 				<label htmlFor='sort'>
 					<input type='checkbox' name='sort' id='sort' />
