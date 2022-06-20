@@ -14,12 +14,14 @@
 .light {
 	--color-background: #f0f5fb;
 
-	--color-text: ##1c1c1c;
+	--color-text: #1c1c1c;
 	--color-textlight: #899a96;
 
 	--primary: #ffffff;
 
 	--border-bottom: 2px solid #e1e1e1;
+
+	--input-border: 1px solid #899a96;
 }
 
 .dark {
@@ -31,4 +33,6 @@
 	--primary: #30444e;
 
 	--border-bottom: 0px solid transparent;
+
+	--input-border: 1px solid transparent;
 }

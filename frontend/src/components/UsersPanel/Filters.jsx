@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Button from '../Buttons/Button';
 import InputSearch from '../Forms/InputSearch';
-import InputSearchAsync from '../Forms/InputSearchAsync';
 import style from './Filters.module.css';
 
 const Filters = () => {
@@ -18,15 +17,12 @@ const Filters = () => {
 	return (
 		<div className={style.filters}>
 			<InputSearch
-				placeholder='Buscar por nombre...'
+				label='Nombre'
+				placeholder='Buscar...'
 				error={name.error}
 				value={name.value}
 				onChange={e => setInputName(e.target.value)}
 			/>
-			<InputSearchAsync />
-			<div>
-				<input type='search' placeholder='Buscar...' />
-			</div>
 			<div>
 				<select name='' id=''>
 					<option value='Por rol'>Por rol</option>
