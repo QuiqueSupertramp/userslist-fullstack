@@ -1,14 +1,21 @@
-.inputSearch {
+.inputContainer {
+	height: 2.5rem;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	background-color: #ffffff;
+	color: #000000;
+	border: var(--input-border);
+	padding: 0.5rem 1rem;
+	border-radius: var(--rounded-sm);
+}
+
+.icon {
+	width: 1rem;
 }
 
 .input {
 	border: none;
 	outline: none;
 	width: 100%;
-	padding: 0.5rem 1rem;
-}
-
-.error {
-	color: var(--color-red);
-	font-size: var(--text-sm);
 }
