@@ -2,7 +2,6 @@ import UserRow from './UserRow';
 import style from './UsersTable.module.css';
 
 const UsersTable = ({ users, isLoading, error }) => {
-	console.log('users', users);
 	if (error) return <p className={style.usersTable}>Error</p>;
 	if (isLoading) return <p className={style.usersTable}>Cargando....</p>;
 	if (users.length === 0)
