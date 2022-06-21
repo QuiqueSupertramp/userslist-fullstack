@@ -25,6 +25,7 @@ h1 {
 	color: var(--color-text);
 	background-color: var(--color-background);
 	min-height: 100vh;
+	overflow-x: hidden;
 }
 
 .header {
@@ -51,5 +52,7 @@ h1 {
 
 main {
 	display: flex;
-	gap: 2rem;
+	justify-content: center;
+	max-width: 1600px;
+	margin: auto;
 }

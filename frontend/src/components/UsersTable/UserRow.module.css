@@ -1,18 +1,19 @@
 .card {
 	padding: 0 2rem;
 	width: 100%;
+	min-width: 700px;
 	background-color: var(--primary);
 	border-radius: var(--rounded-sm);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 5rem;
 	border-bottom: var(--border-bottom);
-	/* color: white; */
 }
 
 .displayName {
-	width: 100%;
+	width: 180px;
+	overflow: hidden;
 }
 
 .username {
@@ -21,11 +22,10 @@
 }
 
 .info {
-	display: flex;
+	display: grid;
+	grid-template-columns: 3fr 2fr 6fr;
 	align-items: center;
-	justify-content: space-between;
-	gap: 3rem;
-	width: 100%;
+	gap: 2rem;
 }
 
 .activeContainer {
@@ -50,8 +50,14 @@
 	background-color: var(--color-red);
 }
 
+.role {
+	text-align: left;
+}
+
 .buttons {
+	/* width: 50%; */
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
 	gap: 1rem;
 }
