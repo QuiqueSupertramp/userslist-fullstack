@@ -8,7 +8,7 @@ import style from './Filters.module.css';
 const Filters = () => {
 	const [filters, setFilters] = useState({
 		search: '',
-		sortBy: null,
+		sortBy: 0,
 		onlyActives: false,
 	});
 
