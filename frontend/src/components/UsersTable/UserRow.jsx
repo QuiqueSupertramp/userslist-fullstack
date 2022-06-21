@@ -1,21 +1,22 @@
 import Button from '../Buttons/Button';
 import style from './UserRow.module.css';
 
-const UserRow = () => {
-	const isActive = false;
+const UserRow = ({ user }) => {
+	const { name, username, role, active, url } = user;
+	console.log('url', url);
 	return (
 		<div className={style.card}>
 			<div className={style.displayName}>
-				<p>Nombre</p>
-				<p className={style.username}>@usuario</p>
+				<p>{name}</p>
+				<p className={style.username}>@{username}</p>
 			</div>
 			<div className={style.info}>
 				<div className={style.activeContainer}>
-					<div className={isActive ? style.active : style.notActive}></div>
-					<p>{isActive ? 'Activo' : 'Inactivo'}</p>
+					<div className={active ? style.active : style.notActive}></div>
+					<p>{active ? 'Activo' : 'Inactivo'}</p>
 				</div>
-				<div>
-					<p>Student</p>
+				<div className={style.role}>
+					<p>{role}</p>
 				</div>
 				<div className={style.buttons}>
 					<Button kind='edit'>Editar</Button>
