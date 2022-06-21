@@ -3,7 +3,6 @@ import style from './UserRow.module.css';
 
 const UserRow = ({ user }) => {
 	const { name, username, role, active, url } = user;
-	console.log('url', url);
 	return (
 		<div className={style.card}>
 			<div className={style.displayName}>

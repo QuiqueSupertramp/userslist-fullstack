@@ -2,6 +2,9 @@ import { useState } from 'react';
 import Header from './components/Header/Header';
 import UsersPanel from './components/UsersPanel/UsersPanel';
 import UsersTable from './components/UsersTable/UsersTable';
+
+import usersToDisplay from './lib/helpers/usersToDisplay';
+import useFilters from './lib/hooks/useFilters';
 import useUsers from './lib/hooks/useUsers';
 
 function App() {
@@ -9,14 +12,25 @@ function App() {
 
 	const { users, isLoading, error, reloadUsers } = useUsers();
 
-	// const { users, isLoading, error } = usersData;
+	const { filters, setSearch, setSortBy, setOnlyActiveUsers } = useFilters();
+
+	const filteredUsers = usersToDisplay(users, filters);
 
 	return (
 		<div className={`${theme} app`}>
 			<Header theme={theme} setTheme={setTheme} />
 			<main>
-				<UsersTable users={users} isLoading={isLoading} error={error} />
-				<UsersPanel />
+				<UsersTable
+					users={filteredUsers}
+					isLoading={isLoading}
+					error={error}
+				/>
+				<UsersPanel
+					filters={filters}
+					setSortBy={setSortBy}
+					setSearch={setSearch}
+					setOnlyActiveUsers={setOnlyActiveUsers}
+				/>
 			</main>
 		</div>
 	);
