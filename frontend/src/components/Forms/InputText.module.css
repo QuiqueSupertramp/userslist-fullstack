@@ -1,0 +1,29 @@
+.inputSearch {
+}
+
+.inputContainer {
+	height: 2.5rem;
+	display: flex;
+	align-items: center;
+	background-color: #ffffff;
+	color: #000000;
+	border: var(--input-border);
+	padding: 0.5rem 1rem;
+	border-radius: var(--rounded-sm);
+}
+
+.input {
+	border: none;
+	outline: none;
+	width: 100%;
+}
+
+.error {
+	color: var(--color-red);
+	font-size: var(--text-sm);
+}
+
+.checkIcon {
+	width: 1.25rem;
+	color: var(--color-green);
+}
