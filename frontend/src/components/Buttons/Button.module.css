@@ -2,11 +2,10 @@
 	border: none;
 	padding: 0.5rem 1rem;
 	color: var(--color-text);
-	/* border-radius: var(--rounded-sm); */
 }
 
 .button:disabled {
-	opacity: 0.3;
+	opacity: 0.5;
 	cursor: not-allowed;
 }
 
