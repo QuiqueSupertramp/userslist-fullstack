@@ -1,11 +1,14 @@
+import fetchAPI from '../helpers/fetchAPI';
+
 // fetchAPI possible props => { url = URL_API, method = 'GET, signal, body }
 // fetchAPI structure res => { data, error, aborted }
 
-import fetchAPI from '../helpers/fetchAPI';
-
 export const getUsers = async signal => await fetchAPI({ signal });
 
-export const getUserById = async url => await fetchAPI({ url });
+export const findUserById = async url => await fetchAPI({ url });
+
+export const findUserByUsername = async (username, signal) =>
+	await fetchAPI({ username, signal });
 
 export const createUser = async newUser =>
 	await fetchAPI({ method: 'POST', body: newUser });

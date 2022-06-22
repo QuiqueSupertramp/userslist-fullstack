@@ -1,9 +1,9 @@
 // Functions
 const URL_API = 'https://userslistpractice.herokuapp.com/users';
 
-const fetchAPI = async ({ url, method, signal, body }) => {
+const fetchAPI = async ({ url, method, signal, body, username }) => {
 	try {
-		const res = await fetchAction({ url, method, signal, body });
+		const res = await fetchAction({ url, method, signal, body, username });
 		if (!res.ok) throw new Error();
 		const data = await res.json();
 		return { data, error: false, aborted: false };
@@ -22,7 +22,9 @@ const fetchAPI = async ({ url, method, signal, body }) => {
 	}
 };
 
-const fetchAction = async ({ url, method, signal, body }) => {
+const fetchAction = async ({ url, method, signal, body, username }) => {
+	username && (url = `${URL_API}?username=${username}`);
+
 	return await fetch(url || URL_API, {
 		method: method || 'GET',
 		headers: { 'Content-Type': 'application/json' },
