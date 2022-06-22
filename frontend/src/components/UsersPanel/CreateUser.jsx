@@ -7,7 +7,7 @@ import InputText from '../Forms/InputText';
 import InputTextAsync from '../Forms/InputTextAsync';
 import Select from '../Forms/Select';
 
-const CreateUser = ({ reloadUsers }) => {
+const CreateUser = ({ reloadUsers, setFilterPanel }) => {
 	const { formValues, setName, setUsername, invalidForm, resetForm } =
 		useCreateForm();
 
@@ -19,10 +19,13 @@ const CreateUser = ({ reloadUsers }) => {
 			<InputText
 				placeholder='Nombre...'
 				value={formValues.name.value}
+				error={formValues.name.error}
 				onChange={e => setName(e.target.value)}
 			/>
 			<InputTextAsync
 				placeholder='@Usuario...'
+				error={formValues.username.error}
+				isLoading={formValues.username.isLoading}
 				value={formValues.username.value}
 				onChange={e => setUsername(e.target.value)}
 			/>
@@ -32,7 +35,9 @@ const CreateUser = ({ reloadUsers }) => {
 				<option value={USER_ROLES.OTHER}>Otro</option>
 			</Select>
 			<InputCheckbox name='active' label='¿Activo?' />
-			<Button kind='create'>Crear usuario</Button>
+			<Button type='submit' kind='create' disabled={invalidForm}>
+				Crear usuario
+			</Button>
 		</form>
 	);
 };
