@@ -42,7 +42,7 @@ const createUser = async (req, res) => {
       res.status(201).send({
          newUser,
          message: `${newUser.name} ha sido creado correctamente`,
-         url: `http://localhost:${process.env.PORT}/users/${newUser._id}`,
+         url: `${process.env.DIR}/users/${newUser._id}`,
       });
    } catch (error) {
       handleErrors(res, error);
@@ -52,7 +52,10 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
    try {
       const userUpdated = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      res.status(200).send({ userUpdated });
+      res.status(200).send({ 
+         userUpdated,
+         message: `${userUpdated.name} ha sido actualizado correctamente`,
+      });
    } catch (error) {
       handleErrors(res, error);
    }
