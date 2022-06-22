@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import IconButton from '../Buttons/IconButton';
+import CrossIcon from '../Icons/CrossIcon';
 import CreateUser from './CreateUser';
 import Filters from './Filters';
 import style from './usersPanel.module.css';
@@ -18,9 +20,11 @@ const UsersPanel = ({
 	return (
 		<div className={style.usersPanel}>
 			{panel !== 'filters' && (
-				<button className={style.cancel} onClick={setFilterPanel}>
-					X
-				</button>
+				<IconButton
+					icon={CrossIcon}
+					className={style.cancel}
+					onClick={setFilterPanel}
+				/>
 			)}
 			{panel === 'filters' && (
 				<Filters

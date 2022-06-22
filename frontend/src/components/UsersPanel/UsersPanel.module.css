@@ -1,8 +1,14 @@
 .usersPanel {
+	position: relative;
 	min-width: 375px;
-	height: 400px;
 	background-color: var(--primary);
 	border-radius: var(--rounded-sm);
 	margin: 2rem;
 	padding: 2rem;
+}
+
+.cancel {
+	position: absolute;
+	top: -1.25rem;
+	right: -1.25rem;
 }

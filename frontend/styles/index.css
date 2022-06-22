@@ -16,6 +16,11 @@ a {
 	cursor: pointer;
 }
 
+button {
+	padding: 0;
+	border: none;
+}
+
 h1 {
 	text-align: center;
 	margin: 0;
@@ -53,6 +58,7 @@ h1 {
 main {
 	display: flex;
 	justify-content: center;
+	align-items: flex-start;
 	max-width: 1600px;
 	margin: auto;
 }

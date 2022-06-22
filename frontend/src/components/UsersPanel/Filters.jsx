@@ -34,7 +34,10 @@ const Filters = ({
 				checked={onlyActiveUsers}
 				onChange={setOnlyActiveUsers}
 			/>
-			<Button kind='create' onClick={setCreatePanel}>
+			<Button
+				kind='create'
+				onClick={setCreatePanel}
+				className={style.button}>
 				Añadir usuario nuevo
 			</Button>
 		</div>

@@ -6,6 +6,7 @@ import InputCheckbox from '../Forms/InputCheckbox';
 import InputText from '../Forms/InputText';
 import InputTextAsync from '../Forms/InputTextAsync';
 import Select from '../Forms/Select';
+import style from './CreateUser.module.css';
 
 const CreateUser = ({ reloadUsers, setFilterPanel }) => {
 	const { formValues, setName, setUsername, invalidForm, resetForm } =
@@ -13,6 +14,7 @@ const CreateUser = ({ reloadUsers, setFilterPanel }) => {
 
 	return (
 		<form
+			className={style.createForm}
 			onSubmit={e =>
 				handleSubmit(e, reloadUsers, resetForm, invalidForm, formValues)
 			}>
@@ -35,7 +37,11 @@ const CreateUser = ({ reloadUsers, setFilterPanel }) => {
 				<option value={USER_ROLES.OTHER}>Otro</option>
 			</Select>
 			<InputCheckbox name='active' label='¿Activo?' />
-			<Button type='submit' kind='create' disabled={invalidForm}>
+			<Button
+				type='submit'
+				kind='create'
+				disabled={invalidForm}
+				className={style.button}>
 				Crear usuario
 			</Button>
 		</form>
