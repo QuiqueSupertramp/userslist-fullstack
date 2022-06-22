@@ -1,7 +1,7 @@
-import fetchAPI from '../helpers/fetchAction';
-
 // fetchAPI possible props => { url = URL_API, method = 'GET, signal, body }
 // fetchAPI structure res => { data, error, aborted }
+
+import fetchAPI from '../helpers/fetchAPI';
 
 export const getUsers = async signal => await fetchAPI({ signal });
 
