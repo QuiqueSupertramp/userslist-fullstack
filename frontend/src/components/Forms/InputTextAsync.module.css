@@ -27,3 +27,18 @@
 	width: 1.25rem;
 	color: var(--color-green);
 }
+.crossIcon {
+	width: 1.25rem;
+	color: var(--color-red);
+}
+.findIcon {
+	width: 1.25rem;
+	color: var(--color-textlight);
+	animation: rotate linear 1s infinite;
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}

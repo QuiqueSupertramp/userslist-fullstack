@@ -1,4 +1,3 @@
-import CheckCircle from '../Icons/CheckCircle';
 import style from './InputText.module.css';
 
 const InputText = ({ placeholder, error, ...props }) => {
@@ -12,7 +11,7 @@ const InputText = ({ placeholder, error, ...props }) => {
 					placeholder={placeholder}
 				/>
 			</div>
-			{error && <span className={style.error}>* Error</span>}
+			{error && <span className={style.error}>* {error}</span>}
 		</div>
 	);
 };
