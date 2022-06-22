@@ -1,10 +1,10 @@
 const userModel = require('../models/user.model.js');
 
 const getAllUsers = async (req, res) => {
-   const {username=''} = req.query
-   console.log('username', username)
+   const {username} = req.query
+   const querys = username ? {username} :{}
    try {
-      const users = await userModel.find({username}).exec();
+      const users = await userModel.find(querys).exec();
 
       const response = {
          totalUsers: users.length,
