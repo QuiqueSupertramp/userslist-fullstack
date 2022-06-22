@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchUsers } from '../services/api';
+import { getUsers } from '../services/api';
 
 const initialState = {
 	users: [],
@@ -31,9 +31,9 @@ const useUsers = () => {
 };
 
 const loadUsers = async (setUsers, setError, signal) => {
-	const { users, error, aborted } = await fetchUsers(signal);
+	const { data, error, aborted } = await getUsers(signal);
 	if (aborted) return;
-	error ? setError(error) : setUsers(users.users);
+	error ? setError(error) : setUsers(data.users);
 };
 
 export default useUsers;
