@@ -30,6 +30,7 @@ function App() {
 					setSortBy={setSortBy}
 					setSearch={setSearch}
 					setOnlyActiveUsers={setOnlyActiveUsers}
+					reloadUsers={reloadUsers}
 				/>
 			</main>
 		</div>
