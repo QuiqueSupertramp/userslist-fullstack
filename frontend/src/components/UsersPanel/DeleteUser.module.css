@@ -1,0 +1,10 @@
+.deleteUser {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 1.5rem;
+	width: 100%;
+	margin: auto;
+	padding: 2rem 0;
+	height: 100%;
+}
