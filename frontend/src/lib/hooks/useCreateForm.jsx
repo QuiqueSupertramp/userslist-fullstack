@@ -19,37 +19,22 @@ const useCreateForm = () => {
 
 	const setName = name => {
 		const error = validateName(name);
-
-		setFormValues({
-			...formValues,
-			name: {
-				value: name,
-				error,
-			},
-		});
+		setFormValues({ ...formValues, name: { value: name, error } });
 	};
+
 	const setUsername = username => {
 		const error = validateUsername(username);
 		const isLoading = error === undefined ? false : !error;
-
 		setFormValues({
 			...formValues,
-			username: {
-				value: username,
-				error,
-				isLoading,
-			},
+			username: { value: username, error, isLoading },
 		});
 	};
 
 	const setUsernameError = error =>
 		setFormValues(prevUsername => ({
 			...prevUsername,
-			username: {
-				...prevUsername.username,
-				error,
-				isLoading: false,
-			},
+			username: { ...prevUsername.username, error, isLoading: false },
 		}));
 
 	useEffect(() => {
@@ -74,9 +59,7 @@ const useCreateForm = () => {
 		formValues.username.value.length === 0 ||
 		formValues.username.isLoading;
 
-	const resetForm = () => setFormValues(initalValues);
-
-	return { formValues, setName, setUsername, invalidForm, resetForm };
+	return { formValues, setName, setUsername, invalidForm };
 };
 
 const checkUsername = async (username, setUsernameError, signal) => {

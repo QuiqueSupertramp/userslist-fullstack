@@ -12,7 +12,7 @@ const Filters = ({
 	setSearch,
 	setSortBy,
 	setOnlyActiveUsers,
-	setCreatePanel,
+	setCreateForm,
 }) => {
 	return (
 		<div className={style.filters}>
@@ -34,10 +34,7 @@ const Filters = ({
 				checked={onlyActiveUsers}
 				onChange={setOnlyActiveUsers}
 			/>
-			<Button
-				kind='create'
-				onClick={setCreatePanel}
-				className={style.button}>
+			<Button kind='create' onClick={setCreateForm} className={style.button}>
 				Añadir usuario nuevo
 			</Button>
 		</div>

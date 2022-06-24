@@ -1,8 +1,8 @@
 import Button from '../Buttons/Button';
 import style from './UserRow.module.css';
 
-const UserRow = ({ user }) => {
-	const { name, username, role, active, url } = user;
+const UserRow = ({ user, setEditForm, setDeleteForm }) => {
+	const { name, username, role, active } = user;
 	return (
 		<div className={style.card}>
 			<div className={style.displayName}>
@@ -18,8 +18,12 @@ const UserRow = ({ user }) => {
 					<p>{role}</p>
 				</div>
 				<div className={style.buttons}>
-					<Button kind='edit'>Editar</Button>
-					<Button kind='delete'>Eliminar</Button>
+					<Button kind='edit' onClick={() => setEditForm(user)}>
+						Editar
+					</Button>
+					<Button kind='delete' onClick={() => setDeleteForm(user)}>
+						Eliminar
+					</Button>
 				</div>
 			</div>
 		</div>

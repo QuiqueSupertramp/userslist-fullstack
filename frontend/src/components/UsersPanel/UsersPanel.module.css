@@ -1,6 +1,6 @@
 .usersPanel {
 	position: relative;
-	min-width: 375px;
+	width: 375px;
 	background-color: var(--primary);
 	border-radius: var(--rounded-sm);
 	margin: 2rem;

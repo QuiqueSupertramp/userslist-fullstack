@@ -8,16 +8,13 @@ import InputTextAsync from '../Forms/InputTextAsync';
 import Select from '../Forms/Select';
 import style from './CreateUser.module.css';
 
-const CreateUser = ({ reloadUsers, setFilterPanel }) => {
-	const { formValues, setName, setUsername, invalidForm, resetForm } =
-		useCreateForm();
+const CreateUser = ({ onSuccess }) => {
+	const { formValues, setName, setUsername, invalidForm } = useCreateForm();
 
 	return (
 		<form
 			className={style.createForm}
-			onSubmit={e =>
-				handleSubmit(e, reloadUsers, resetForm, invalidForm, formValues)
-			}>
+			onSubmit={e => handleSubmit(e, formValues, onSuccess)}>
 			<InputText
 				placeholder='Nombre...'
 				value={formValues.name.value}
@@ -48,34 +45,26 @@ const CreateUser = ({ reloadUsers, setFilterPanel }) => {
 	);
 };
 
-const createNewUser = async (newUser, e, reloadUsers, resetForm) => {
-	const { data, error, aborted } = await createUser(newUser);
-	if (aborted) return aborted;
-	if (error) return error;
-	reloadUsers();
-	resetForm();
-	e.target.reset();
-	return data;
-};
-
-const handleSubmit = async (
-	e,
-	reloadUsers,
-	resetForm,
-	invalidForm,
-	formValues
-) => {
-	e.preventDefault();
-
-	if (invalidForm) return { error: 'Hay errores en el formulario' };
-
+const createNewUser = async (e, formValues, onSuccess) => {
 	const newUser = {
 		name: formValues.name.value,
 		username: formValues.username.value,
 		role: e.target.role.value,
 		active: e.target.active.checked,
 	};
-	await createNewUser(newUser, e, reloadUsers, resetForm);
+
+	const { data, error, aborted } = await createUser(newUser);
+	if (aborted) return aborted;
+	if (error) return error;
+
+	onSuccess();
+
+	return { data, error, aborted };
+};
+
+const handleSubmit = async (e, formValues, onSuccess) => {
+	e.preventDefault();
+	return await createNewUser(e, formValues, onSuccess);
 };
 
 export default CreateUser;

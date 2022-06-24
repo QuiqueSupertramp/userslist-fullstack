@@ -5,6 +5,7 @@ import UsersTable from './components/UsersTable/UsersTable';
 
 import usersToDisplay from './lib/helpers/usersToDisplay';
 import useFilters from './lib/hooks/useFilters';
+import useForms from './lib/hooks/useForms';
 import useUsers from './lib/hooks/useUsers';
 
 function App() {
@@ -12,7 +13,10 @@ function App() {
 
 	const { users, isLoading, error, reloadUsers } = useUsers();
 
-	const { filters, setSearch, setSortBy, setOnlyActiveUsers } = useFilters();
+	const { filters, filterSetters } = useFilters();
+
+	const { form, setFilterForm, setCreateForm, setEditForm, setDeleteForm } =
+		useForms();
 
 	const filteredUsers = usersToDisplay(users, filters);
 
@@ -24,12 +28,15 @@ function App() {
 					users={filteredUsers}
 					isLoading={isLoading}
 					error={error}
+					setEditForm={setEditForm}
+					setDeleteForm={setDeleteForm}
 				/>
 				<UsersPanel
 					filters={filters}
-					setSortBy={setSortBy}
-					setSearch={setSearch}
-					setOnlyActiveUsers={setOnlyActiveUsers}
+					filterSetters={filterSetters}
+					form={form}
+					setFilterForm={setFilterForm}
+					setCreateForm={setCreateForm}
 					reloadUsers={reloadUsers}
 				/>
 			</main>

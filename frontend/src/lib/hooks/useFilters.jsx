@@ -19,7 +19,9 @@ const useFilters = () => {
 			onlyActiveUsers: !filters.onlyActiveUsers,
 		});
 
-	return { filters, setSearch, setSortBy, setOnlyActiveUsers };
+	const filterSetters = { setSearch, setSortBy, setOnlyActiveUsers };
+
+	return { filters, filterSetters };
 };
 
 export default useFilters;
