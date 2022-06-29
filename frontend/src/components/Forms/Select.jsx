@@ -1,10 +1,10 @@
 import ArrowDown from '../Icons/ArrowDown';
 import style from './Select.module.css';
 
-const Select = ({ ...props }) => {
+const Select = ({ className = '', ...props }) => {
 	return (
 		<div className={style.selectContainer}>
-			<select {...props} className={style.select}></select>
+			<select {...props} className={`${style.select} ${className}`}></select>
 			<ArrowDown className={style.arrow} />
 		</div>
 	);

@@ -1,44 +1,60 @@
 import { useState } from 'react';
 import Header from './components/Header/Header';
-import UsersPanel from './components/UsersPanel/UsersPanel';
+import Pagination from './components/Pagination/Pagination';
+import UsersFormContainer from './components/UsersFormContainer/UsersFormContainer';
 import UsersTable from './components/UsersTable/UsersTable';
-
+import UsersView from './components/UsersView/UsersView';
+import { UserFormProvider } from './lib/contexts/UserFormsContext';
 import usersToDisplay from './lib/helpers/usersToDisplay';
 import useFilters from './lib/hooks/useFilters';
-import useForms from './lib/hooks/useForms';
 import useUsers from './lib/hooks/useUsers';
 
 function App() {
 	const [theme, setTheme] = useState('dark');
+	const [showByRows, setShowByRows] = useState(true);
 
-	const { users, isLoading, error, reloadUsers } = useUsers();
+	const { users, usersIsLoading, usersError, reloadUsers } = useUsers();
 
-	const { filters, filterSetters } = useFilters();
+	const {
+		filters,
+		filterSetters,
+		resetFilters,
+		pagination,
+		paginationSetters,
+	} = useFilters(users);
 
-	const { form, setFilterForm, setCreateForm, setEditForm, setDeleteForm } =
-		useForms();
-
-	const filteredUsers = usersToDisplay(users, filters);
+	const { paginatedUsers, totalPages } = usersToDisplay(
+		users,
+		filters,
+		pagination
+	);
 
 	return (
 		<div className={`${theme} app`}>
 			<Header theme={theme} setTheme={setTheme} />
 			<main>
-				<UsersTable
-					users={filteredUsers}
-					isLoading={isLoading}
-					error={error}
-					setEditForm={setEditForm}
-					setDeleteForm={setDeleteForm}
-				/>
-				<UsersPanel
-					filters={filters}
-					filterSetters={filterSetters}
-					form={form}
-					setFilterForm={setFilterForm}
-					setCreateForm={setCreateForm}
+				<UserFormProvider
 					reloadUsers={reloadUsers}
-				/>
+					resetFilters={resetFilters}>
+					<div className='usersList'>
+						<UsersView setShowByRows={setShowByRows} />
+						<UsersTable
+							users={paginatedUsers}
+							usersIsLoading={usersIsLoading}
+							usersError={usersError}
+							showByRows={showByRows}
+						/>
+						<Pagination
+							totalPages={totalPages}
+							pagination={pagination}
+							paginationSetters={paginationSetters}
+						/>
+					</div>
+					<UsersFormContainer
+						filters={filters}
+						filterSetters={filterSetters}
+					/>
+				</UserFormProvider>
 			</main>
 		</div>
 	);

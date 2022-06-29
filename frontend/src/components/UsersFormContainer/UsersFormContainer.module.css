@@ -1,0 +1,24 @@
+.usersFormContainer {
+	position: relative;
+	width: 25%;
+	max-width: 375px;
+	background-color: var(--primary);
+	border-radius: var(--rounded-sm);
+	padding: 2rem;
+}
+
+.cancel {
+	position: absolute;
+	top: -1.25rem;
+	right: -1.25rem;
+}
+
+.create {
+	box-shadow: 0 0 10px var(--color-orange);
+}
+.edit {
+	box-shadow: 0 0 10px var(--color-greenlight);
+}
+.delete {
+	box-shadow: 0 0 10px var(--color-red);
+}

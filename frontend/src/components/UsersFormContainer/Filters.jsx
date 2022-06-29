@@ -1,4 +1,7 @@
 import SELECT_OPTIONS from '@/lib/constants/SelectOptions';
+import { USER_FORMS } from '@/lib/constants/UserForms';
+import UserFormsContext from '@/lib/contexts/UserFormsContext';
+import { useContext } from 'react';
 import Button from '../Buttons/Button';
 import InputCheckbox from '../Forms/InputCheckbox';
 import InputSearch from '../Forms/InputSearch';
@@ -12,8 +15,10 @@ const Filters = ({
 	setSearch,
 	setSortBy,
 	setOnlyActiveUsers,
-	setCreateForm,
 }) => {
+	const { setCreateForm, currentForm } = useContext(UserFormsContext);
+	if (currentForm !== USER_FORMS.FILTERS) return null;
+
 	return (
 		<div className={style.filters}>
 			<InputSearch
@@ -21,7 +26,10 @@ const Filters = ({
 				value={search}
 				onChange={e => setSearch(e.target.value)}
 			/>
-			<Select value={sortBy} onChange={e => setSortBy(e.target.value)}>
+			<Select
+				className={style.select}
+				value={sortBy}
+				onChange={e => setSortBy(e.target.value)}>
 				<option value={SELECT_OPTIONS.DEFAULT}>Por defecto</option>
 				<option value={SELECT_OPTIONS.ROLE}>Por rol</option>
 				<option value={SELECT_OPTIONS.NAME}>Por orden alfabético</option>

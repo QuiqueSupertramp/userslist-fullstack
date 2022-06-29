@@ -1,4 +1,4 @@
-const ArrowDown = props => (
+const ListView = props => (
 	<svg
 		{...props}
 		fill='none'
@@ -9,8 +9,8 @@ const ArrowDown = props => (
 			strokeLinecap='round'
 			strokeLinejoin='round'
 			strokeWidth='1'
-			d='M19 9l-7 7-7-7'></path>
+			d='M4 6h16M4 10h16M4 14h16M4 18h16'></path>
 	</svg>
 );
 
-export default ArrowDown;
+export default ListView;

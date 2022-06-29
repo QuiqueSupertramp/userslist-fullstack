@@ -1,0 +1,10 @@
+.usersView {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	color: var(--color-textlight);
+}

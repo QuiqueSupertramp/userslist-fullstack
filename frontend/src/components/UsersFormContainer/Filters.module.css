@@ -9,6 +9,10 @@
 	height: 100%;
 }
 
+.select {
+	color: var(--color-black);
+}
+
 .button {
 	margin-top: 2rem;
 }

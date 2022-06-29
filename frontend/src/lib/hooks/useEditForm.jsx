@@ -4,7 +4,7 @@ import { findUserByUsername } from '../services/api';
 
 const useEditForm = currentUser => {
 	const [formValues, setFormValues] = useState(() =>
-		initialState(currentUser)
+		getInitialState(currentUser)
 	);
 
 	const setName = name => {
@@ -59,7 +59,7 @@ const useEditForm = currentUser => {
 		initialValues;
 
 	useEffect(() => {
-		setFormValues(() => initialState(currentUser));
+		setFormValues(() => getInitialState(currentUser));
 	}, [currentUser]);
 
 	useEffect(() => {
@@ -88,7 +88,7 @@ const checkUserAsync = async (setUsernameError, username, signal) => {
 	setUsernameError(res.data.totalUsers > 0 ? 'El usuario ya existe' : false);
 };
 
-const initialState = currentUser => ({
+const getInitialState = currentUser => ({
 	name: { value: currentUser.name, error: false },
 	username: {
 		value: currentUser.username,

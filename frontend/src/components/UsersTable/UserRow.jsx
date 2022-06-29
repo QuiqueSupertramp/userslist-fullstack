@@ -1,7 +1,18 @@
 import Button from '../Buttons/Button';
 import style from './UserRow.module.css';
+import USER_ROLES from '@/lib/constants/UserRoles';
+import { useContext } from 'react';
+import UserFormsContext from '@/lib/contexts/UserFormsContext';
 
-const UserRow = ({ user, setEditForm, setDeleteForm }) => {
+const UserRow = ({ user }) => {
+	const { setEditForm, setDeleteForm } = useContext(UserFormsContext);
+
+	const ROLES = {
+		[USER_ROLES.STUDENT]: 'Alumno',
+		[USER_ROLES.TEACHER]: 'Profesor',
+		[USER_ROLES.OTHER]: 'Otro',
+	};
+
 	const { name, username, role, active } = user;
 	return (
 		<div className={style.card}>
@@ -15,7 +26,7 @@ const UserRow = ({ user, setEditForm, setDeleteForm }) => {
 					<p>{active ? 'Activo' : 'Inactivo'}</p>
 				</div>
 				<div className={style.role}>
-					<p>{role}</p>
+					<p>{ROLES[role]}</p>
 				</div>
 				<div className={style.buttons}>
 					<Button kind='edit' onClick={() => setEditForm(user)}>

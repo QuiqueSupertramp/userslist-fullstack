@@ -1,7 +1,7 @@
 .button {
 	width: 2.5rem;
 	height: 2.5rem;
-	background-color: var(--color-textlight);
+	background-color: transparent;
 	border-radius: 50%;
 	border: none;
 	display: flex;
@@ -9,8 +9,24 @@
 	align-items: center;
 }
 
+.button:disabled {
+	opacity: 0.7;
+	cursor: default;
+}
+
+.filled {
+	background-color: var(--color-textlight);
+}
+
 .icon {
 	width: 1.25rem;
 	height: 1.25rem;
-	color: var(--color-black);
+}
+
+.edit {
+	color: var(--color-greenlight);
+}
+
+.delete {
+	color: var(--color-red);
 }

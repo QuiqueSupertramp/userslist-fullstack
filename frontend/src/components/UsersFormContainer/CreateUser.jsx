@@ -1,6 +1,8 @@
 import USER_ROLES from '@/lib/constants/UserRoles';
+import UserFormsContext from '@/lib/contexts/UserFormsContext';
 import useCreateForm from '@/lib/hooks/useCreateForm';
 import { createUser } from '@/lib/services/api';
+import { useContext, useState } from 'react';
 import Button from '../Buttons/Button';
 import InputCheckbox from '../Forms/InputCheckbox';
 import InputText from '../Forms/InputText';
@@ -8,13 +10,17 @@ import InputTextAsync from '../Forms/InputTextAsync';
 import Select from '../Forms/Select';
 import style from './CreateUser.module.css';
 
-const CreateUser = ({ onSuccess }) => {
+const CreateUser = () => {
+	const { onSuccess } = useContext(UserFormsContext);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { formValues, setName, setUsername, invalidForm } = useCreateForm();
 
 	return (
 		<form
 			className={style.createForm}
-			onSubmit={e => handleSubmit(e, formValues, onSuccess)}>
+			onSubmit={e =>
+				handleSubmit(e, formValues, onSuccess, setIsSubmitting)
+			}>
 			<InputText
 				placeholder='Nombre...'
 				value={formValues.name.value}
@@ -37,15 +43,15 @@ const CreateUser = ({ onSuccess }) => {
 			<Button
 				type='submit'
 				kind='create'
-				disabled={invalidForm}
+				disabled={invalidForm || isSubmitting}
 				className={style.button}>
-				Crear usuario
+				{!isSubmitting ? 'Crear usuario' : 'Creando...'}
 			</Button>
 		</form>
 	);
 };
 
-const createNewUser = async (e, formValues, onSuccess) => {
+const createNewUser = async (e, formValues) => {
 	const newUser = {
 		name: formValues.name.value,
 		username: formValues.username.value,
@@ -53,18 +59,19 @@ const createNewUser = async (e, formValues, onSuccess) => {
 		active: e.target.active.checked,
 	};
 
-	const { data, error, aborted } = await createUser(newUser);
-	if (aborted) return aborted;
-	if (error) return error;
-
-	onSuccess();
-
-	return { data, error, aborted };
+	return await createUser(newUser);
 };
 
-const handleSubmit = async (e, formValues, onSuccess) => {
+const handleSubmit = async (e, formValues, onSuccess, setIsSubmitting) => {
 	e.preventDefault();
-	return await createNewUser(e, formValues, onSuccess);
+	setIsSubmitting(true);
+
+	const { data, error, aborted } = await createNewUser(e, formValues);
+
+	if (error || aborted) setIsSubmitting(false);
+	else onSuccess();
+
+	return { data, error, aborted };
 };
 
 export default CreateUser;

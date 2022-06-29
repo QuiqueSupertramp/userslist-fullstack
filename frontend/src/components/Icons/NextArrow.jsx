@@ -1,4 +1,4 @@
-const ArrowDown = props => (
+const NextArrow = props => (
 	<svg
 		{...props}
 		fill='none'
@@ -8,9 +8,9 @@ const ArrowDown = props => (
 		<path
 			strokeLinecap='round'
 			strokeLinejoin='round'
-			strokeWidth='1'
-			d='M19 9l-7 7-7-7'></path>
+			strokeWidth='2'
+			d='M9 5l7 7-7 7'></path>
 	</svg>
 );
 
-export default ArrowDown;
+export default NextArrow;

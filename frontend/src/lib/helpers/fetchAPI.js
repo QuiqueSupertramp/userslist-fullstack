@@ -22,11 +22,20 @@ const fetchAPI = async ({ url, method, signal, body, username }) => {
 	}
 };
 
-const fetchAction = async ({ url, method, signal, body, username }) => {
-	username && (url = `${URL_API}?username=${username}`);
+const fetchAction = async ({
+	url = URL_API,
+	method = 'GET',
+	signal,
+	body,
+	username,
+}) => {
+	if (username) {
+		url = new URL(url);
+		url.searchParams.append('username', username);
+	}
 
-	return await fetch(url || URL_API, {
-		method: method || 'GET',
+	return await fetch(url, {
+		method,
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(body),
 		signal,

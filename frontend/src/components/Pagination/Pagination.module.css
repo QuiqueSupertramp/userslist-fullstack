@@ -1,0 +1,16 @@
+.pagination {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.select {
+	background-color: var(--primary);
+	color: var(--color-text);
+}
+
+.currentPage {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}

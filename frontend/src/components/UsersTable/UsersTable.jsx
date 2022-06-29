@@ -1,27 +1,19 @@
+import UserCard from './UserCard';
 import UserRow from './UserRow';
 import style from './UsersTable.module.css';
 
-const UsersTable = ({
-	users,
-	isLoading,
-	error,
-	setEditForm,
-	setDeleteForm,
-}) => {
-	if (error) return <p className={style.usersTable}>Error</p>;
-	if (isLoading) return <p className={style.usersTable}>Cargando....</p>;
+const UsersTable = ({ users, usersIsLoading, usersError, showByRows }) => {
+	if (usersError) return <p className={style.usersTable}>Error</p>;
+	if (usersIsLoading) return <p className={style.usersTable}>Cargando....</p>;
 	if (users.length === 0)
 		return <p className={style.usersTable}>No hay usuarios</p>;
+
+	const UsersDisplayFormat = showByRows ? UserRow : UserCard;
 
 	return (
 		<div className={style.usersTable}>
 			{users.map(user => (
-				<UserRow
-					key={user.url}
-					user={user}
-					setEditForm={setEditForm}
-					setDeleteForm={setDeleteForm}
-				/>
+				<UsersDisplayFormat key={user.url} user={user} />
 			))}
 		</div>
 	);

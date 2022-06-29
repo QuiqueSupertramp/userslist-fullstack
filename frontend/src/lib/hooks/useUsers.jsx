@@ -33,6 +33,7 @@ const useUsers = () => {
 const loadUsers = async (setUsers, setError, signal) => {
 	const { data, error, aborted } = await getUsers(signal);
 	if (aborted) return;
+
 	error ? setError(error) : setUsers(data.users);
 };
 

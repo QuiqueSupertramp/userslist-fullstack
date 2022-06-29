@@ -51,15 +51,37 @@ const sortUsers = (users, sortBy) => {
 	}
 };
 
-const usersToDisplay = (users, filters) => {
+const filterUsers = (users, filters) => {
 	if (!users) return [];
 	if (!filters) return users;
 
-	let finalUsers = filterUsersByActive(users, filters.onlyActiveUsers);
-	finalUsers = sortUsers(finalUsers, filters.sortBy);
-	finalUsers = filterUsersBySearch(finalUsers, filters.search);
+	let filteredUsers = filterUsersByActive(users, filters.onlyActiveUsers);
+	filteredUsers = sortUsers(filteredUsers, filters.sortBy);
+	filteredUsers = filterUsersBySearch(filteredUsers, filters.search);
 
-	return finalUsers;
+	return filteredUsers;
+};
+
+const paginateUsers = (filteredUsers, currentPage, steps) => {
+	const totalPages = Math.ceil(filteredUsers.length / steps) || 1;
+	const initialUser = (currentPage - 1) * steps;
+	const finalUser = initialUser + steps;
+
+	const paginatedUsers = filteredUsers.slice(initialUser, finalUser);
+
+	return { paginatedUsers, totalPages };
+};
+
+const usersToDisplay = (users, filters, pagination) => {
+	const { currentPage, steps } = pagination;
+	const filteredUsers = filterUsers(users, filters);
+	const { paginatedUsers, totalPages } = paginateUsers(
+		filteredUsers,
+		currentPage,
+		steps
+	);
+
+	return { paginatedUsers, totalPages };
 };
 
 export default usersToDisplay;

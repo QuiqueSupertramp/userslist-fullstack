@@ -1,6 +1,8 @@
 import USER_ROLES from '@/lib/constants/UserRoles';
+import UserFormsContext from '@/lib/contexts/UserFormsContext';
 import useEditForm from '@/lib/hooks/useEditForm';
 import { updateUser } from '@/lib/services/api';
+import { useContext, useState } from 'react';
 import Button from '../Buttons/Button';
 import InputCheckbox from '../Forms/InputCheckbox';
 import InputText from '../Forms/InputText';
@@ -8,7 +10,9 @@ import InputTextAsync from '../Forms/InputTextAsync';
 import Select from '../Forms/Select';
 import style from './EditUser.module.css';
 
-const EditUser = ({ currentUser, onSuccess }) => {
+const EditUser = () => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { currentUser, onSuccess } = useContext(UserFormsContext);
 	const url = currentUser.url;
 	const { formValues, setName, setUsername, setRole, setActive, invalidForm } =
 		useEditForm(currentUser);
@@ -17,7 +21,7 @@ const EditUser = ({ currentUser, onSuccess }) => {
 		<form
 			className={style.editForm}
 			onSubmit={e => {
-				handleEdit(e, formValues, url, onSuccess);
+				handleEdit(e, formValues, url, onSuccess, setIsSubmitting);
 			}}>
 			<InputText
 				value={formValues.name.value}
@@ -44,27 +48,35 @@ const EditUser = ({ currentUser, onSuccess }) => {
 				onChange={e => setActive(e.target.checked)}
 				label='¿Activo?'
 			/>
-			<Button type='submit' className={style.button} disabled={invalidForm}>
-				Editar usuario
+			<Button
+				type='submit'
+				className={style.button}
+				disabled={invalidForm || isSubmitting}>
+				{!isSubmitting ? 'Editar usuario' : 'Editando...'}
 			</Button>
 		</form>
 	);
 };
 
-const handleEdit = async (e, formValues, url, onSuccess) => {
-	e.preventDefault();
-
+const updateNewUser = async (formValues, url) => {
 	const userToUpdate = {
 		name: formValues.name.value,
 		username: formValues.username.value,
-		role: e.target.role.value,
-		active: e.target.active.checked,
+		role: formValues.role.value,
+		active: formValues.active.checked,
 	};
 
-	const { data, error, aborted } = await updateUser(url, userToUpdate);
-	if (error || aborted) return { error, aborted };
+	return await updateUser(url, userToUpdate);
+};
 
-	onSuccess();
+const handleEdit = async (e, formValues, url, onSuccess, setIsSubmitting) => {
+	e.preventDefault();
+	setIsSubmitting(true);
+
+	const { data, error, aborted } = await updateNewUser(formValues, url);
+
+	if (error || aborted) setIsSubmitting(false);
+	else onSuccess();
 
 	return { data, error, aborted };
 };
