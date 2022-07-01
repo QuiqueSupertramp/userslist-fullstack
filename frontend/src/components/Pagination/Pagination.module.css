@@ -9,6 +9,10 @@
 	color: var(--color-text);
 }
 
+.selectIcon {
+	color: var(--color-text);
+}
+
 .currentPage {
 	display: flex;
 	align-items: center;

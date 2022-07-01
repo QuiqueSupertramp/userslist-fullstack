@@ -14,7 +14,8 @@ const Pagination = ({ totalPages, pagination, paginationSetters }) => {
 			<Select
 				value={steps}
 				onChange={e => setSteps(e.target.value)}
-				className={style.select}>
+				selectClass={style.select}
+				iconClass={style.selectIcon}>
 				<option value={PAGINATION.STEPS[0]}>{PAGINATION.STEPS[0]}</option>
 				<option value={PAGINATION.STEPS[1]}>{PAGINATION.STEPS[1]}</option>
 				<option value={PAGINATION.STEPS[2]}>{PAGINATION.STEPS[2]}</option>

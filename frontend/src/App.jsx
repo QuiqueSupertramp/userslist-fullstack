@@ -37,7 +37,10 @@ function App() {
 					reloadUsers={reloadUsers}
 					resetFilters={resetFilters}>
 					<div className='usersList'>
-						<UsersView setShowByRows={setShowByRows} />
+						<UsersView
+							showByRows={showByRows}
+							setShowByRows={setShowByRows}
+						/>
 						<UsersTable
 							users={paginatedUsers}
 							usersIsLoading={usersIsLoading}

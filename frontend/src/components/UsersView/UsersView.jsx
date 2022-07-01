@@ -1,16 +1,26 @@
+import IconButton from '../Buttons/IconButton';
 import GridView from '../Icons/GridView';
 import ListView from '../Icons/ListView';
 import style from './UsersView.module.css';
 
-const UsersView = ({ setShowByRows }) => {
+const UsersView = ({ showByRows, setShowByRows }) => {
 	return (
 		<div className={style.usersView}>
-			<GridView
+			<IconButton
+				icon={GridView}
 				className={style.icon}
 				onClick={() => setShowByRows(false)}
+				filled={false}
+				disabled={!showByRows}
 			/>
 			<span>|</span>
-			<ListView className={style.icon} onClick={() => setShowByRows(true)} />
+			<IconButton
+				icon={ListView}
+				className={style.icon}
+				onClick={() => setShowByRows(true)}
+				filled={false}
+				disabled={showByRows}
+			/>
 		</div>
 	);
 };

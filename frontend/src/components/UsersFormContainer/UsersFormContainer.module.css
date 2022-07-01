@@ -5,6 +5,7 @@
 	background-color: var(--primary);
 	border-radius: var(--rounded-sm);
 	padding: 2rem;
+	margin-top: 2rem;
 }
 
 .cancel {

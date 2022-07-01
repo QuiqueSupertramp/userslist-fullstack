@@ -27,7 +27,7 @@ const Filters = ({
 				onChange={e => setSearch(e.target.value)}
 			/>
 			<Select
-				className={style.select}
+				selectClass={style.select}
 				value={sortBy}
 				onChange={e => setSortBy(e.target.value)}>
 				<option value={SELECT_OPTIONS.DEFAULT}>Por defecto</option>

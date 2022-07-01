@@ -1,5 +1,6 @@
 {
 	"name": "userslist",
+	"homepage": "https://quiquesupertramp.github.io/userslist-fullstack/",
 	"private": true,
 	"version": "0.0.0",
 	"scripts": {
@@ -7,9 +8,12 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"format": "prettier --write .",
-		"lint": "eslint --fix . --ext .js,.jsx"
+		"lint": "eslint --fix . --ext .js,.jsx",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
+		"gh-pages": "^4.0.0",
 		"react": "18.1.0",
 		"react-dom": "18.1.0"
 	},
