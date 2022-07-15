@@ -14,6 +14,7 @@ function App() {
 	const [showByRows, setShowByRows] = useState(true);
 
 	const { users, usersIsLoading, usersError, reloadUsers } = useUsers();
+	console.log('usersIsLoading', usersIsLoading);
 
 	const {
 		filters,

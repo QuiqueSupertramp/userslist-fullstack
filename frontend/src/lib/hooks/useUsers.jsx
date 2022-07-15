@@ -3,8 +3,8 @@ import { getUsers } from '../services/api';
 
 const initialState = {
 	users: [],
-	isLoading: true,
-	error: false,
+	usersIsLoading: true,
+	usersError: false,
 };
 
 const useUsers = () => {
@@ -13,19 +13,20 @@ const useUsers = () => {
 	const reloadUsers = () => setUsersData(initialState);
 
 	const setUsers = users =>
-		setUsersData({ users, isLoading: false, error: false });
+		setUsersData({ users, usersIsLoading: false, usersError: false });
 
 	const setError = error =>
-		setUsersData({ users: [], isLoading: false, error });
+		setUsersData({ users: [], usersIsLoading: false, usersError: error });
 
 	useEffect(() => {
-		if (usersData.isLoading) {
+		console.log('usersData', usersData.usersIsLoading);
+		if (usersData.usersIsLoading) {
 			const controller = new AbortController();
 			const signal = controller.signal;
 			loadUsers(setUsers, setError, signal);
 			return () => controller.abort();
 		}
-	}, [usersData.isLoading]);
+	}, [usersData.usersIsLoading]);
 
 	return { ...usersData, reloadUsers };
 };
