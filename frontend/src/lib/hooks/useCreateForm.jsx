@@ -1,54 +1,15 @@
 import { useEffect, useReducer } from 'react';
 import { CREATE_FORM_ACTIONS } from '../constants/CreateFormActions';
-import { validateName, validateUsername } from '../helpers/inputValidations';
+import {
+	createFormReducer,
+	CREATE_FORM_INITIAL_STATE,
+} from '../reducers/CreateFormReducer';
 import { findUserByUsername } from '../services/api';
-
-const initalValues = {
-	name: {
-		value: '',
-		error: undefined,
-	},
-	username: {
-		value: '',
-		error: undefined,
-		isLoading: false,
-	},
-};
-
-const createFormReducer = (state, action) => {
-	switch (action.type) {
-		case CREATE_FORM_ACTIONS.NAME: {
-			const error = validateName(action.value);
-			return { ...state, name: { value: action.value, error } };
-		}
-		case CREATE_FORM_ACTIONS.USERNAME: {
-			const error = validateUsername(action.value);
-			const isLoading = error === undefined ? false : !error;
-			return {
-				...state,
-				username: { value: action.value, error, isLoading },
-			};
-		}
-		case CREATE_FORM_ACTIONS.USERNAME_ERROR: {
-			return {
-				...state,
-				username: {
-					...state.username,
-					error: action.value,
-					isLoading: false,
-				},
-			};
-		}
-
-		default:
-			throw new Error('Invalid Action');
-	}
-};
 
 const useCreateForm = () => {
 	const [formValues, dispatchCreateForm] = useReducer(
 		createFormReducer,
-		initalValues
+		CREATE_FORM_INITIAL_STATE
 	);
 
 	useEffect(() => {
