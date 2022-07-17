@@ -1,3 +1,4 @@
+import { FILTERS_ACTIONS } from '@/lib/constants/FiltersActions';
 import SELECT_OPTIONS from '@/lib/constants/SelectOptions';
 import { USER_FORMS } from '@/lib/constants/UserForms';
 import UserFormsContext from '@/lib/contexts/UserFormsContext';
@@ -8,14 +9,7 @@ import InputSearch from '../Forms/InputSearch';
 import Select from '../Forms/Select';
 import style from './Filters.module.css';
 
-const Filters = ({
-	search,
-	sortBy,
-	onlyActiveUsers,
-	setSearch,
-	setSortBy,
-	setOnlyActiveUsers,
-}) => {
+const Filters = ({ search, sortBy, onlyActiveUsers, dispatchFilters }) => {
 	const { setCreateForm, currentForm } = useContext(UserFormsContext);
 	if (currentForm !== USER_FORMS.FILTERS) return null;
 
@@ -24,12 +18,22 @@ const Filters = ({
 			<InputSearch
 				placeholder='Buscar...'
 				value={search}
-				onChange={e => setSearch(e.target.value)}
+				onChange={e =>
+					dispatchFilters({
+						type: FILTERS_ACTIONS.SEARCH,
+						value: e.target.value,
+					})
+				}
 			/>
 			<Select
 				selectClass={style.select}
 				value={sortBy}
-				onChange={e => setSortBy(e.target.value)}>
+				onChange={e =>
+					dispatchFilters({
+						type: FILTERS_ACTIONS.SORT_BY,
+						value: e.target.value,
+					})
+				}>
 				<option value={SELECT_OPTIONS.DEFAULT}>Por defecto</option>
 				<option value={SELECT_OPTIONS.ROLE}>Por rol</option>
 				<option value={SELECT_OPTIONS.NAME}>Por orden alfabético</option>
@@ -40,7 +44,9 @@ const Filters = ({
 			<InputCheckbox
 				label='Mostrar solo activos'
 				checked={onlyActiveUsers}
-				onChange={setOnlyActiveUsers}
+				onChange={() =>
+					dispatchFilters({ type: FILTERS_ACTIONS.ONLY_ACTIVES })
+				}
 			/>
 			<Button kind='create' onClick={setCreateForm} className={style.button}>
 				Añadir usuario nuevo

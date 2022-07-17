@@ -4,6 +4,7 @@ import Pagination from './components/Pagination/Pagination';
 import UsersFormContainer from './components/UsersFormContainer/UsersFormContainer';
 import UsersTable from './components/UsersTable/UsersTable';
 import UsersView from './components/UsersView/UsersView';
+import { FILTERS_ACTIONS } from './lib/constants/FiltersActions';
 import { UserFormProvider } from './lib/contexts/UserFormsContext';
 import usersToDisplay from './lib/helpers/usersToDisplay';
 import useFilters from './lib/hooks/useFilters';
@@ -14,15 +15,8 @@ function App() {
 	const [showByRows, setShowByRows] = useState(true);
 
 	const { users, usersIsLoading, usersError, reloadUsers } = useUsers();
-	console.log('usersIsLoading', usersIsLoading);
 
-	const {
-		filters,
-		filterSetters,
-		resetFilters,
-		pagination,
-		paginationSetters,
-	} = useFilters(users);
+	const { filters, pagination, dispatchFilters } = useFilters(users);
 
 	const { paginatedUsers, totalPages } = usersToDisplay(
 		users,
@@ -36,7 +30,9 @@ function App() {
 			<main>
 				<UserFormProvider
 					reloadUsers={reloadUsers}
-					resetFilters={resetFilters}>
+					resetFilters={() =>
+						dispatchFilters({ type: FILTERS_ACTIONS.RESET })
+					}>
 					<div className='usersList'>
 						<UsersView
 							showByRows={showByRows}
@@ -51,12 +47,23 @@ function App() {
 						<Pagination
 							totalPages={totalPages}
 							pagination={pagination}
-							paginationSetters={paginationSetters}
+							setSteps={steps =>
+								dispatchFilters({
+									type: FILTERS_ACTIONS.STEPS,
+									value: steps,
+								})
+							}
+							setCurrentPage={newCurrentPage =>
+								dispatchFilters({
+									type: FILTERS_ACTIONS.CURRENT_PAGE,
+									value: newCurrentPage,
+								})
+							}
 						/>
 					</div>
 					<UsersFormContainer
 						filters={filters}
-						filterSetters={filterSetters}
+						dispatchFilters={dispatchFilters}
 					/>
 				</UserFormProvider>
 			</main>

@@ -1,3 +1,4 @@
+import { EDIT_FORM_ACTIONS } from '@/lib/constants/EditFormActions';
 import USER_ROLES from '@/lib/constants/UserRoles';
 import UserFormsContext from '@/lib/contexts/UserFormsContext';
 import useEditForm from '@/lib/hooks/useEditForm';
@@ -14,7 +15,7 @@ const EditUser = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { currentUser, onSuccess } = useContext(UserFormsContext);
 	const url = currentUser.url;
-	const { formValues, setName, setUsername, setRole, setActive, invalidForm } =
+	const { formValues, dispatchEditForm, invalidForm } =
 		useEditForm(currentUser);
 
 	return (
@@ -26,18 +27,33 @@ const EditUser = () => {
 			<InputText
 				value={formValues.name.value}
 				error={formValues.name.error}
-				onChange={e => setName(e.target.value)}
+				onChange={e =>
+					dispatchEditForm({
+						type: EDIT_FORM_ACTIONS.NAME,
+						value: e.target.value,
+					})
+				}
 			/>
 			<InputTextAsync
 				error={formValues.username.error}
 				isLoading={formValues.username.isLoading}
 				value={formValues.username.value}
-				onChange={e => setUsername(e.target.value)}
+				onChange={e =>
+					dispatchEditForm({
+						type: EDIT_FORM_ACTIONS.USERNAME,
+						value: e.target.value,
+					})
+				}
 			/>
 			<Select
 				name='role'
 				value={formValues.role}
-				onChange={e => setRole(e.target.value)}>
+				onChange={e =>
+					dispatchEditForm({
+						type: EDIT_FORM_ACTIONS.ROLE,
+						value: e.target.value,
+					})
+				}>
 				<option value={USER_ROLES.STUDENT}>Alumno</option>
 				<option value={USER_ROLES.TEACHER}>Profesor</option>
 				<option value={USER_ROLES.OTHER}>Otro</option>
@@ -45,7 +61,12 @@ const EditUser = () => {
 			<InputCheckbox
 				name='active'
 				checked={formValues.active}
-				onChange={e => setActive(e.target.checked)}
+				onChange={e =>
+					dispatchEditForm({
+						type: EDIT_FORM_ACTIONS.ACTIVE,
+						value: e.target.checked,
+					})
+				}
 				label='¿Activo?'
 			/>
 			<Button
@@ -62,8 +83,8 @@ const updateNewUser = async (formValues, url) => {
 	const userToUpdate = {
 		name: formValues.name.value,
 		username: formValues.username.value,
-		role: formValues.role.value,
-		active: formValues.active.checked,
+		role: formValues.role,
+		active: formValues.active,
 	};
 
 	return await updateUser(url, userToUpdate);

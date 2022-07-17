@@ -1,48 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
+import { EDIT_FORM_ACTIONS } from '../constants/EditFormActions';
 import { validateName, validateUsername } from '../helpers/inputValidations';
 import { findUserByUsername } from '../services/api';
 
+const editFormReducer = (state, action) => {
+	switch (action.type) {
+		case EDIT_FORM_ACTIONS.NAME: {
+			const error = validateName(action.value);
+			return {
+				...state,
+				name: {
+					value: action.value,
+					error,
+				},
+			};
+		}
+		case EDIT_FORM_ACTIONS.USERNAME: {
+			const error = validateUsername(action.value);
+			return {
+				...state,
+				username: {
+					value: action.value,
+					error,
+					isLoading: error === undefined ? false : !error,
+				},
+			};
+		}
+		case EDIT_FORM_ACTIONS.USERNAME_ERROR:
+			return {
+				...state,
+				username: {
+					...state.username,
+					error: action.value,
+					isLoading: false,
+				},
+			};
+		case EDIT_FORM_ACTIONS.ROLE:
+			return {
+				...state,
+				role: action.value,
+			};
+		case EDIT_FORM_ACTIONS.ACTIVE:
+			return {
+				...state,
+				active: action.value,
+			};
+		case EDIT_FORM_ACTIONS.REPLACE:
+			return getInitialState(action.value);
+
+		default:
+			throw new Error('Invalid Action');
+	}
+};
+
 const useEditForm = currentUser => {
-	const [formValues, setFormValues] = useState(() =>
-		getInitialState(currentUser)
+	const [formValues, dispatchEditForm] = useReducer(
+		editFormReducer,
+		currentUser,
+		getInitialState
 	);
-
-	const setName = name => {
-		const error = validateName(name);
-
-		setFormValues({
-			...formValues,
-			name: {
-				value: name,
-				error,
-			},
-		});
-	};
-	const setUsername = username => {
-		const error = validateUsername(username);
-
-		setFormValues({
-			...formValues,
-			username: {
-				value: username,
-				error,
-				isLoading: error === undefined ? false : !error,
-			},
-		});
-	};
-
-	const setUsernameError = error =>
-		setFormValues(prevFormValues => ({
-			...prevFormValues,
-			username: {
-				...prevFormValues.username,
-				error,
-				isLoading: false,
-			},
-		}));
-
-	const setRole = role => setFormValues({ ...formValues, role });
-	const setActive = active => setFormValues({ ...formValues, active });
 
 	const initialValues =
 		currentUser.name === formValues.name.value &&
@@ -59,7 +75,7 @@ const useEditForm = currentUser => {
 		initialValues;
 
 	useEffect(() => {
-		setFormValues(() => getInitialState(currentUser));
+		dispatchEditForm({ type: EDIT_FORM_ACTIONS.REPLACE, value: currentUser });
 	}, [currentUser]);
 
 	useEffect(() => {
@@ -68,9 +84,12 @@ const useEditForm = currentUser => {
 			const signal = controller.signal;
 
 			if (currentUser.username === formValues.username.value)
-				setUsernameError(false);
+				dispatchEditForm({
+					type: EDIT_FORM_ACTIONS.USERNAME_ERROR,
+					value: false,
+				});
 
-			checkUserAsync(setUsernameError, formValues.username.value, signal);
+			checkUserAsync(dispatchEditForm, formValues.username.value, signal);
 			return () => controller.abort();
 		}
 	}, [
@@ -79,13 +98,16 @@ const useEditForm = currentUser => {
 		currentUser.username,
 	]);
 
-	return { formValues, setName, setUsername, setRole, setActive, invalidForm };
+	return { formValues, dispatchEditForm, invalidForm };
 };
 
-const checkUserAsync = async (setUsernameError, username, signal) => {
+const checkUserAsync = async (dispatchEditForm, username, signal) => {
 	const res = await findUserByUsername(username, signal);
 	if (res.aborted) return;
-	setUsernameError(res.data.totalUsers > 0 ? 'El usuario ya existe' : false);
+	dispatchEditForm({
+		type: EDIT_FORM_ACTIONS.USERNAME_ERROR,
+		value: res.data.totalUsers > 0 ? 'El usuario ya existe' : false,
+	});
 };
 
 const getInitialState = currentUser => ({

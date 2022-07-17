@@ -5,9 +5,8 @@ import NextArrow from '../Icons/NextArrow';
 import PrevArrow from '../Icons/PrevArrow';
 import style from './Pagination.module.css';
 
-const Pagination = ({ totalPages, pagination, paginationSetters }) => {
+const Pagination = ({ totalPages, pagination, setCurrentPage, setSteps }) => {
 	const { currentPage, steps } = pagination;
-	const { setCurrentPage, setSteps } = paginationSetters;
 
 	return (
 		<div className={style.pagination}>

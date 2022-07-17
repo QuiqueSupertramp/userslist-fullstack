@@ -1,3 +1,4 @@
+import { CREATE_FORM_ACTIONS } from '@/lib/constants/CreateFormActions';
 import USER_ROLES from '@/lib/constants/UserRoles';
 import UserFormsContext from '@/lib/contexts/UserFormsContext';
 import useCreateForm from '@/lib/hooks/useCreateForm';
@@ -13,7 +14,7 @@ import style from './CreateUser.module.css';
 const CreateUser = () => {
 	const { onSuccess } = useContext(UserFormsContext);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { formValues, setName, setUsername, invalidForm } = useCreateForm();
+	const { formValues, dispatchCreateForm, invalidForm } = useCreateForm();
 
 	return (
 		<form
@@ -25,14 +26,24 @@ const CreateUser = () => {
 				placeholder='Nombre...'
 				value={formValues.name.value}
 				error={formValues.name.error}
-				onChange={e => setName(e.target.value)}
+				onChange={e =>
+					dispatchCreateForm({
+						type: CREATE_FORM_ACTIONS.NAME,
+						value: e.target.value,
+					})
+				}
 			/>
 			<InputTextAsync
 				placeholder='@Usuario...'
 				error={formValues.username.error}
 				isLoading={formValues.username.isLoading}
 				value={formValues.username.value}
-				onChange={e => setUsername(e.target.value)}
+				onChange={e =>
+					dispatchCreateForm({
+						type: CREATE_FORM_ACTIONS.USERNAME,
+						value: e.target.value,
+					})
+				}
 			/>
 			<Select name='role'>
 				<option value={USER_ROLES.STUDENT}>Alumno</option>

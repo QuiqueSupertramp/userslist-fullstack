@@ -15,7 +15,7 @@ const FORM_TO_SHOW = {
 	[USER_FORMS.DELETE]: { form: <DeleteUser />, style: style.delete },
 };
 
-const UsersFormContainer = ({ filters, filterSetters }) => {
+const UsersFormContainer = ({ filters, dispatchFilters }) => {
 	const { setFilterForm, currentForm } = useContext(UserFormsContext);
 
 	const formStyle = FORM_TO_SHOW[currentForm]?.style;
@@ -30,7 +30,7 @@ const UsersFormContainer = ({ filters, filterSetters }) => {
 					onClick={setFilterForm}
 				/>
 			)}
-			<Filters {...filters} {...filterSetters} />
+			<Filters {...filters} dispatchFilters={dispatchFilters} />
 			{Form}
 		</div>
 	);

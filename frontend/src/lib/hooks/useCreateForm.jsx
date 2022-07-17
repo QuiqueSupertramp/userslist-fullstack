@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
+import { CREATE_FORM_ACTIONS } from '../constants/CreateFormActions';
 import { validateName, validateUsername } from '../helpers/inputValidations';
 import { findUserByUsername } from '../services/api';
 
@@ -14,35 +15,52 @@ const initalValues = {
 	},
 };
 
+const createFormReducer = (state, action) => {
+	switch (action.type) {
+		case CREATE_FORM_ACTIONS.NAME: {
+			const error = validateName(action.value);
+			return { ...state, name: { value: action.value, error } };
+		}
+		case CREATE_FORM_ACTIONS.USERNAME: {
+			const error = validateUsername(action.value);
+			const isLoading = error === undefined ? false : !error;
+			return {
+				...state,
+				username: { value: action.value, error, isLoading },
+			};
+		}
+		case CREATE_FORM_ACTIONS.USERNAME_ERROR: {
+			return {
+				...state,
+				username: {
+					...state.username,
+					error: action.value,
+					isLoading: false,
+				},
+			};
+		}
+
+		default:
+			throw new Error('Invalid Action');
+	}
+};
+
 const useCreateForm = () => {
-	const [formValues, setFormValues] = useState(initalValues);
-
-	const setName = name => {
-		const error = validateName(name);
-		setFormValues({ ...formValues, name: { value: name, error } });
-	};
-
-	const setUsername = username => {
-		const error = validateUsername(username);
-		const isLoading = error === undefined ? false : !error;
-		setFormValues({
-			...formValues,
-			username: { value: username, error, isLoading },
-		});
-	};
-
-	const setUsernameError = error =>
-		setFormValues(prevUsername => ({
-			...prevUsername,
-			username: { ...prevUsername.username, error, isLoading: false },
-		}));
+	const [formValues, dispatchCreateForm] = useReducer(
+		createFormReducer,
+		initalValues
+	);
 
 	useEffect(() => {
 		if (formValues.username.isLoading) {
 			const controller = new AbortController();
 			const signal = controller.signal;
 			const timeoutID = setTimeout(() => {
-				checkUsername(formValues.username.value, setUsernameError, signal);
+				checkUsername(
+					formValues.username.value,
+					dispatchCreateForm,
+					signal
+				);
 			}, 300);
 
 			return () => {
@@ -59,13 +77,16 @@ const useCreateForm = () => {
 		formValues.username.value.length === 0 ||
 		formValues.username.isLoading;
 
-	return { formValues, setName, setUsername, invalidForm };
+	return { formValues, dispatchCreateForm, invalidForm };
 };
 
-const checkUsername = async (username, setUsernameError, signal) => {
+const checkUsername = async (username, dispatchCreateForm, signal) => {
 	const res = await findUserByUsername(username, signal);
 	if (res.aborted) return;
-	setUsernameError(res.data.totalUsers > 0 ? 'El usuario ya existe' : false);
+	dispatchCreateForm({
+		type: CREATE_FORM_ACTIONS.USERNAME_ERROR,
+		value: res.data.totalUsers > 0 ? 'El usuario ya existe' : false,
+	});
 };
 
 export default useCreateForm;

@@ -6,24 +6,12 @@ const useSelectedForm = () => {
 		form: USER_FORMS.FILTERS,
 	});
 
-	const setFilterForm = () =>
-		setSelectedForm({
-			form: USER_FORMS.FILTERS,
-		});
-	const setCreateForm = () =>
-		setSelectedForm({
-			form: USER_FORMS.CREATE,
-		});
+	const setFilterForm = () => setSelectedForm({ form: USER_FORMS.FILTERS });
+	const setCreateForm = () => setSelectedForm({ form: USER_FORMS.CREATE });
 	const setEditForm = currentUser =>
-		setSelectedForm({
-			form: USER_FORMS.EDIT,
-			currentUser,
-		});
+		setSelectedForm({ form: USER_FORMS.EDIT, currentUser });
 	const setDeleteForm = currentUser =>
-		setSelectedForm({
-			form: USER_FORMS.DELETE,
-			currentUser,
-		});
+		setSelectedForm({ form: USER_FORMS.DELETE, currentUser });
 
 	return {
 		currentForm: selectedForm.form,

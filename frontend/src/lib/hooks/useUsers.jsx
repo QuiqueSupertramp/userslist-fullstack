@@ -19,7 +19,6 @@ const useUsers = () => {
 		setUsersData({ users: [], usersIsLoading: false, usersError: error });
 
 	useEffect(() => {
-		console.log('usersData', usersData.usersIsLoading);
 		if (usersData.usersIsLoading) {
 			const controller = new AbortController();
 			const signal = controller.signal;

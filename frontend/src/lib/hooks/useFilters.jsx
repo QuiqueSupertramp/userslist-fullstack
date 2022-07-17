@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { FILTERS_ACTIONS } from '../constants/FiltersActions';
 import PAGINATION from '../constants/Pagination';
 
-const initialState = {
+const INITIAL_STATE = {
 	search: '',
 	sortBy: 0,
 	onlyActiveUsers: false,
@@ -9,62 +10,66 @@ const initialState = {
 	steps: PAGINATION.DEFAULT_STEPS,
 };
 
+const filtersReducer = (state, action) => {
+	switch (action.type) {
+		case FILTERS_ACTIONS.SEARCH:
+			return {
+				...state,
+				currentPage: PAGINATION.DEFAULT_PAGE,
+				search: action.value,
+			};
+		case FILTERS_ACTIONS.SORT_BY:
+			return {
+				...state,
+				currentPage: PAGINATION.DEFAULT_PAGE,
+				sortBy: action.value,
+			};
+		case FILTERS_ACTIONS.ONLY_ACTIVES:
+			return {
+				...state,
+				currentPage: PAGINATION.DEFAULT_PAGE,
+				onlyActiveUsers: !state.onlyActiveUsers,
+			};
+		case FILTERS_ACTIONS.CURRENT_PAGE:
+			return {
+				...state,
+				currentPage: action.value,
+			};
+		case FILTERS_ACTIONS.STEPS:
+			return {
+				...state,
+				currentPage: PAGINATION.DEFAULT_PAGE,
+				steps: action.value,
+			};
+		case FILTERS_ACTIONS.RESET:
+			return { ...INITIAL_STATE };
+
+		default:
+			throw new Error('Invalid action');
+	}
+};
+
 const useFilters = users => {
-	const [filtersParams, setFiltersParams] = useState(initialState);
-
-	const setSearch = search => {
-		setFiltersParams({
-			...filtersParams,
-			currentPage: PAGINATION.DEFAULT_PAGE,
-			search,
-		});
-	};
-	const setSortBy = sortBy => {
-		setFiltersParams({
-			...filtersParams,
-			currentPage: PAGINATION.DEFAULT_PAGE,
-			sortBy,
-		});
-	};
-	const setOnlyActiveUsers = () =>
-		setFiltersParams({
-			...filtersParams,
-			currentPage: PAGINATION.DEFAULT_PAGE,
-			onlyActiveUsers: !filtersParams.onlyActiveUsers,
-		});
-
-	const setCurrentPage = currentPage =>
-		setFiltersParams({ ...filtersParams, currentPage });
-
-	const setSteps = steps =>
-		setFiltersParams({
-			...filtersParams,
-			currentPage: PAGINATION.DEFAULT_PAGE,
-			steps,
-		});
-
-	const resetFilters = () => setFiltersParams(initialState);
+	const [filtersParams, dispatchFilters] = useReducer(
+		filtersReducer,
+		INITIAL_STATE
+	);
 
 	const filters = {
 		search: filtersParams.search,
 		sortBy: filtersParams.sortBy,
 		onlyActiveUsers: filtersParams.onlyActiveUsers,
 	};
-	const filterSetters = { setSearch, setSortBy, setOnlyActiveUsers };
 
 	const pagination = {
 		currentPage: filtersParams.currentPage,
 		steps: filtersParams.steps,
 	};
 
-	const paginationSetters = { setCurrentPage, setSteps };
-
 	return {
 		filters,
-		filterSetters,
-		resetFilters,
 		pagination,
-		paginationSetters,
+		dispatchFilters,
 	};
 };
 

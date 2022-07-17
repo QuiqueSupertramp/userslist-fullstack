@@ -65,7 +65,7 @@ const filterUsers = (users, filters) => {
 const paginateUsers = (filteredUsers, currentPage, steps) => {
 	const totalPages = Math.ceil(filteredUsers.length / steps) || 1;
 	const initialUser = (currentPage - 1) * steps;
-	const finalUser = initialUser + steps;
+	const finalUser = initialUser + Number(steps);
 
 	const paginatedUsers = filteredUsers.slice(initialUser, finalUser);
 
