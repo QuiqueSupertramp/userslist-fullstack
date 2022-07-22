@@ -1,0 +1,33 @@
+.header {
+	width: 100%;
+	margin: auto;
+	background-color: var(--primary);
+}
+
+.headerContainer {
+	margin: auto;
+}
+
+.headerNav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid var(--color-background);
+	padding: 0.5rem 2rem;
+}
+
+.headerTitle {
+	color: var(--color-text);
+}
+
+.header__btn {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	background-color: transparent;
+	margin-right: 1rem;
+}
+
+.header__icon {
+	width: 1.5rem;
+}
